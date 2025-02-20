@@ -1,19 +1,123 @@
 package ru.balrom.Aston_rest_servlet_jdbc.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.CarDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.service.CarService;
+import ru.balrom.Aston_rest_servlet_jdbc.service.Service;
+
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "carServlet", value = "/car/*")
 public class CarServlet extends HttpServlet {
+    private final Service<CarDTO> serviceCar = new CarService();
+    private final ObjectMapper mapper = new ObjectMapper();
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+
+        String path = request.getPathInfo();
+        PrintWriter writer = response.getWriter();
+
+        if (path == null || path.equals("/")) {
+            List<CarDTO> list = serviceCar.getAll();
+            String json = mapper.writeValueAsString(list);
+            response.setStatus(HttpServletResponse.SC_OK);
+            writer.write(json);
+
+        } else {
+            int id = Integer.parseInt(path.substring(1));
+            CarDTO carDTO = serviceCar.get(id);
+            try {
+                if (carDTO == null) {
+                    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    response.getWriter().write("Car with id - %s is not found");
+                    return;
+                }
+                String json = mapper.writeValueAsString(carDTO);
+                response.setStatus(HttpServletResponse.SC_OK);
+                writer.write(json);
+            } catch (NumberFormatException exception) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("ID must be only a number");
+            }
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+
+        String path = request.getPathInfo();
+
+        if (path != null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid path");
+            return;
+        }
+
+        BufferedReader body = request.getReader();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (body.ready()) {
+            stringBuilder.append(body.readLine());
+        }
+        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
+        serviceCar.save(current);
+
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        response.getWriter().write(stringBuilder.toString());
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
 
+        String path = request.getPathInfo();
+
+        if (path != null) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid path");
+            return;
+        }
+
+        BufferedReader body = request.getReader();
+        StringBuilder stringBuilder = new StringBuilder();
+        while (body.ready()) {
+            stringBuilder.append(body.readLine());
+        }
+        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
+        serviceCar.update(current);
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.getWriter().write(stringBuilder.toString());
+
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json");
+
+        String path = request.getPathInfo();
+        if (path != null || !path.equals("/")) {
+            int id = Integer.parseInt(path.substring(1));
+            serviceCar.delete(id);
+            response.setStatus(HttpServletResponse.SC_OK);
+
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid path");
+        }
     }
 }
