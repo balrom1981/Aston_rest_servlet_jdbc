@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 public class Car {
     private  int id;
-    private String model;
+    private String brand;
     private String colour;
 }

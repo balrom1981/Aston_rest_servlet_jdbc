@@ -12,7 +12,7 @@ import java.util.Objects;
 @ToString
 public class CarDTO {
     private  int id;
-    private String model;
+    private String brand;
     private String colour;
 
     @Override
@@ -20,11 +20,11 @@ public class CarDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarDTO carDTO = (CarDTO) o;
-        return id == carDTO.id && Objects.equals(model, carDTO.model) && Objects.equals(colour, carDTO.colour);
+        return id == carDTO.id && Objects.equals(brand, carDTO.brand) && Objects.equals(colour, carDTO.colour);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, model, colour);
+        return Objects.hash(id, brand, colour);
     }
 }
