@@ -1,2 +1,11 @@
-package ru.balrom.Aston_rest_servlet_jdbc.service;public interface Service {
+package ru.balrom.Aston_rest_servlet_jdbc.service;
+
+import java.util.List;
+
+public interface Service<T> {
+    T get(int id);
+    List<T> getAll();
+    void save(T t);
+    void update(T t);
+    void delete(int id);
 }

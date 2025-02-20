@@ -1,2 +1,15 @@
-package ru.balrom.Aston_rest_servlet_jdbc.entity;public class Car {
+package ru.balrom.Aston_rest_servlet_jdbc.entity;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+public class Car {
+    private  int id;
+    private String model;
+    private String colour;
 }
