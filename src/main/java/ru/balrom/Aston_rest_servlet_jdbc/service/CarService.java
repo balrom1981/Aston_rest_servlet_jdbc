@@ -28,16 +28,17 @@ public class CarService implements Service<CarDTO> {
 
     @Override
     public void save(CarDTO carDTO) {
+        carRepository.save(mapper.fromDTO(carDTO));
 
     }
 
     @Override
     public void update(CarDTO carDTO) {
-
+        carRepository.update(mapper.fromDTO(carDTO));
     }
 
     @Override
     public void delete(int id) {
-
+        carRepository.delete(id);
     }
 }
