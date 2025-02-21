@@ -38,7 +38,7 @@ public class PersonServlet extends HttpServlet {
             try {
                 if (person == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    response.getWriter().write("City with id - %s is not found");
+                    response.getWriter().write("Person with id - %s is not found");
                     return;
                 }
                 String json = mapper.writeValueAsString(person);

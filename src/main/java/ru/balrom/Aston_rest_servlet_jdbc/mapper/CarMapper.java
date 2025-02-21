@@ -11,6 +11,9 @@ public class CarMapper implements Mapper<Car, CarDto>{
 
     @Override
     public CarDto toDto(Car car) {
+        if (car==null){
+            return null;
+        }
         return CarDto.builder().id(car.getId()).brand(car.getBrand()).colour(car.getColour()).build();
     }
 }

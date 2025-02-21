@@ -13,6 +13,6 @@ public class Person {
     private int id;
     private String name;
     private String surname;
-    private int id_car;
-    private int id_apartment;
+    private int idCar;
+    private int idApartment;
 }

@@ -12,6 +12,9 @@ public class CityMapper implements Mapper<City, CityDto> {
 
     @Override
     public CityDto toDto(City city) {
+        if (city==null){
+            return null;
+        }
         return CityDto.builder().id(city.getId()).name(city.getName()).build();
     }
 }

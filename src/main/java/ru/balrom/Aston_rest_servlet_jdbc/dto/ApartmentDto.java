@@ -12,19 +12,19 @@ import java.util.Objects;
 @ToString
 public class ApartmentDto {
     private int id;
-    private int number_rooms;
-    private int id_city;
+    private int numberRooms;
+    private int idCity;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ApartmentDto that = (ApartmentDto) o;
-        return id == that.id && number_rooms == that.number_rooms && id_city == that.id_city;
+        return id == that.id && numberRooms == that.numberRooms && idCity == that.idCity;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number_rooms, id_city);
+        return Objects.hash(id, numberRooms, idCity);
     }
 }

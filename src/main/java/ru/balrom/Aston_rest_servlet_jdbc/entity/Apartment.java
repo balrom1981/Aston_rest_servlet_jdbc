@@ -10,6 +10,6 @@ import lombok.*;
 @ToString
 public class Apartment {
     private int id;
-    private int number_rooms;
-    private int id_city;
+    private int numberRooms;
+    private int idCity;
 }
