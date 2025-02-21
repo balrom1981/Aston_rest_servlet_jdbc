@@ -1,8 +1,8 @@
 package ru.balrom.Aston_rest_servlet_jdbc.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.balrom.Aston_rest_servlet_jdbc.dto.CarDTO;
-import ru.balrom.Aston_rest_servlet_jdbc.service.CarService;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.CityDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.service.CityService;
 import ru.balrom.Aston_rest_servlet_jdbc.service.Service;
 
 import javax.servlet.*;
@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "carServlet", value = "/rest/v1/cars/*")
-public class CarServlet extends HttpServlet {
-    private final Service<CarDTO> serviceCar = new CarService();
+@WebServlet(name = "cityServlet", value = "/rest/v1/cities/*")
+public class CityServlet extends HttpServlet {
+    private final Service<CityDTO> serviceCity = new CityService();
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -27,21 +27,21 @@ public class CarServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         if (path == null || path.equals("/")) {
-            List<CarDTO> list = serviceCar.getAll();
+            List<CityDTO> list = serviceCity.getAll();
             String json = mapper.writeValueAsString(list);
             response.setStatus(HttpServletResponse.SC_OK);
             writer.write(json);
 
         } else {
             int id = Integer.parseInt(path.substring(1));
-            CarDTO carDTO = serviceCar.get(id);
+            CityDTO cityDTO = serviceCity.get(id);
             try {
-                if (carDTO == null) {
+                if (cityDTO == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    response.getWriter().write("Car with id - %s is not found");
+                    response.getWriter().write("City with id - %s is not found");
                     return;
                 }
-                String json = mapper.writeValueAsString(carDTO);
+                String json = mapper.writeValueAsString(cityDTO);
                 response.setStatus(HttpServletResponse.SC_OK);
                 writer.write(json);
             } catch (NumberFormatException exception) {
@@ -69,8 +69,8 @@ public class CarServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
-        serviceCar.save(current);
+        CityDTO current = mapper.readValue(stringBuilder.toString(), CityDTO.class);
+        serviceCity.save(current);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
         response.getWriter().write(stringBuilder.toString());
@@ -95,8 +95,8 @@ public class CarServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
-        serviceCar.update(current);
+        CityDTO current = mapper.readValue(stringBuilder.toString(), CityDTO.class);
+        serviceCity.update(current);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(stringBuilder.toString());
@@ -112,7 +112,7 @@ public class CarServlet extends HttpServlet {
         String path = request.getPathInfo();
         if (path != null || !path.equals("/")) {
             int id = Integer.parseInt(path.substring(1));
-            serviceCar.delete(id);
+            serviceCity.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
 
         } else {
