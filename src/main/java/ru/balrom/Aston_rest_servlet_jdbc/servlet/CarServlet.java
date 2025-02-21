@@ -1,7 +1,7 @@
 package ru.balrom.Aston_rest_servlet_jdbc.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.balrom.Aston_rest_servlet_jdbc.dto.CarDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.CarDto;
 import ru.balrom.Aston_rest_servlet_jdbc.service.CarService;
 import ru.balrom.Aston_rest_servlet_jdbc.service.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "carServlet", value = "/rest/v1/cars/*")
 public class CarServlet extends HttpServlet {
-    private final Service<CarDTO> serviceCar = new CarService();
+    private final Service<CarDto> serviceCar = new CarService();
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -27,14 +27,14 @@ public class CarServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         if (path == null || path.equals("/")) {
-            List<CarDTO> list = serviceCar.getAll();
+            List<CarDto> list = serviceCar.getAll();
             String json = mapper.writeValueAsString(list);
             response.setStatus(HttpServletResponse.SC_OK);
             writer.write(json);
 
         } else {
             int id = Integer.parseInt(path.substring(1));
-            CarDTO carDTO = serviceCar.get(id);
+            CarDto carDTO = serviceCar.get(id);
             try {
                 if (carDTO == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -69,7 +69,7 @@ public class CarServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
+        CarDto current = mapper.readValue(stringBuilder.toString(), CarDto.class);
         serviceCar.save(current);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
@@ -95,7 +95,7 @@ public class CarServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CarDTO current = mapper.readValue(stringBuilder.toString(), CarDTO.class);
+        CarDto current = mapper.readValue(stringBuilder.toString(), CarDto.class);
         serviceCar.update(current);
 
         response.setStatus(HttpServletResponse.SC_OK);

@@ -11,7 +11,7 @@ import java.util.Objects;
 @Builder
 @ToString
 
-public class PersonDTO {
+public class PersonDto {
     private int id;
     private String name;
     private String surname;
@@ -22,8 +22,8 @@ public class PersonDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PersonDTO personDTO = (PersonDTO) o;
-        return id == personDTO.id && id_car == personDTO.id_car && id_apartment == personDTO.id_apartment && Objects.equals(name, personDTO.name) && Objects.equals(surname, personDTO.surname);
+        PersonDto personDto = (PersonDto) o;
+        return id == personDto.id && id_car == personDto.id_car && id_apartment == personDto.id_apartment && Objects.equals(name, personDto.name) && Objects.equals(surname, personDto.surname);
     }
 
     @Override

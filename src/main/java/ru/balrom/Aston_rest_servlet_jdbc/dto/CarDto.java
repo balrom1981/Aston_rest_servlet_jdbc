@@ -10,7 +10,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-public class CarDTO {
+public class CarDto {
     private  int id;
     private String brand;
     private String colour;
@@ -19,8 +19,8 @@ public class CarDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CarDTO carDTO = (CarDTO) o;
-        return id == carDTO.id && Objects.equals(brand, carDTO.brand) && Objects.equals(colour, carDTO.colour);
+        CarDto carDto = (CarDto) o;
+        return id == carDto.id && Objects.equals(brand, carDto.brand) && Objects.equals(colour, carDto.colour);
     }
 
     @Override

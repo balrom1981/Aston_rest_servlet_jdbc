@@ -10,7 +10,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-public class ApartmentDTO {
+public class ApartmentDto {
     private int id;
     private int number_rooms;
     private int id_city;
@@ -19,7 +19,7 @@ public class ApartmentDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ApartmentDTO that = (ApartmentDTO) o;
+        ApartmentDto that = (ApartmentDto) o;
         return id == that.id && number_rooms == that.number_rooms && id_city == that.id_city;
     }
 

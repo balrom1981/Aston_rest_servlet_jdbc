@@ -10,7 +10,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @Builder
 @ToString
-public class CityDTO {
+public class CityDto {
     private int id;
     private String name;
 
@@ -18,8 +18,8 @@ public class CityDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CityDTO cityDTO = (CityDTO) o;
-        return id == cityDTO.id && Objects.equals(name, cityDTO.name);
+        CityDto cityDto = (CityDto) o;
+        return id == cityDto.id && Objects.equals(name, cityDto.name);
     }
 
     @Override

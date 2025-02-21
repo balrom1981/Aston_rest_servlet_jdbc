@@ -1,8 +1,8 @@
 package ru.balrom.Aston_rest_servlet_jdbc.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.balrom.Aston_rest_servlet_jdbc.dto.ApartmentDto;
-import ru.balrom.Aston_rest_servlet_jdbc.service.ApartmentService;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.PersonDto;
+import ru.balrom.Aston_rest_servlet_jdbc.service.PersonService;
 import ru.balrom.Aston_rest_servlet_jdbc.service.Service;
 
 import javax.servlet.*;
@@ -13,9 +13,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet(name = "apartmentServlet", value = "/rest/v1/apartments/*")
-public class ApartmentServlet extends HttpServlet {
-    private final Service<ApartmentDto> serviceApartment = new ApartmentService();
+@WebServlet(name = "personServlet", value = "/rest/v1/persons/*")
+public class PersonServlet extends HttpServlet {
+    private final Service<PersonDto> servicePerson = new PersonService();
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -27,21 +27,21 @@ public class ApartmentServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         if (path == null || path.equals("/")) {
-            List<ApartmentDto> list = serviceApartment.getAll();
+            List<PersonDto> list = servicePerson.getAll();
             String json = mapper.writeValueAsString(list);
             response.setStatus(HttpServletResponse.SC_OK);
             writer.write(json);
 
         } else {
             int id = Integer.parseInt(path.substring(1));
-            ApartmentDto apartment = serviceApartment.get(id);
+            PersonDto person = servicePerson.get(id);
             try {
-                if (apartment == null) {
+                if (person == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                     response.getWriter().write("City with id - %s is not found");
                     return;
                 }
-                String json = mapper.writeValueAsString(apartment);
+                String json = mapper.writeValueAsString(person);
                 response.setStatus(HttpServletResponse.SC_OK);
                 writer.write(json);
             } catch (NumberFormatException exception) {
@@ -69,8 +69,8 @@ public class ApartmentServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        ApartmentDto current = mapper.readValue(stringBuilder.toString(), ApartmentDto.class);
-        serviceApartment.save(current);
+        PersonDto current = mapper.readValue(stringBuilder.toString(), PersonDto.class);
+        servicePerson.save(current);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
         response.getWriter().write(stringBuilder.toString());
@@ -95,8 +95,8 @@ public class ApartmentServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        ApartmentDto current = mapper.readValue(stringBuilder.toString(), ApartmentDto.class);
-        serviceApartment.update(current);
+        PersonDto current = mapper.readValue(stringBuilder.toString(), PersonDto.class);
+        servicePerson.update(current);
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.getWriter().write(stringBuilder.toString());
@@ -112,7 +112,7 @@ public class ApartmentServlet extends HttpServlet {
         String path = request.getPathInfo();
         if (path != null || !path.equals("/")) {
             int id = Integer.parseInt(path.substring(1));
-            serviceApartment.delete(id);
+            servicePerson.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
 
         } else {

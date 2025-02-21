@@ -1,13 +1,13 @@
 package ru.balrom.Aston_rest_servlet_jdbc.service;
 
-import ru.balrom.Aston_rest_servlet_jdbc.dto.ApartmentDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.ApartmentDto;
 import ru.balrom.Aston_rest_servlet_jdbc.mapper.ApartmentMapper;
 import ru.balrom.Aston_rest_servlet_jdbc.repository.ApartmentRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ApartmentService implements Service<ApartmentDTO>{
+public class ApartmentService implements Service<ApartmentDto>{
     private final ApartmentRepository apartmentRepository;
     private final ApartmentMapper mapper;
 
@@ -17,23 +17,23 @@ public class ApartmentService implements Service<ApartmentDTO>{
     }
 
     @Override
-    public ApartmentDTO get(int id) {
-        return mapper.toDTO(apartmentRepository.get(id));
+    public ApartmentDto get(int id) {
+        return mapper.toDto(apartmentRepository.get(id));
     }
 
     @Override
-    public List<ApartmentDTO> getAll() {
-        return apartmentRepository.getAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+    public List<ApartmentDto> getAll() {
+        return apartmentRepository.getAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public void save(ApartmentDTO apartmentDTO) {
-        apartmentRepository.save(mapper.fromDTO(apartmentDTO));
+    public void save(ApartmentDto apartmentDto) {
+        apartmentRepository.save(mapper.fromDto(apartmentDto));
     }
 
     @Override
-    public void update(ApartmentDTO apartmentDTO) {
-        apartmentRepository.update(mapper.fromDTO(apartmentDTO));
+    public void update(ApartmentDto apartmentDto) {
+        apartmentRepository.update(mapper.fromDto(apartmentDto));
     }
 
     @Override

@@ -1,13 +1,13 @@
 package ru.balrom.Aston_rest_servlet_jdbc.service;
 
-import ru.balrom.Aston_rest_servlet_jdbc.dto.CityDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.CityDto;
 import ru.balrom.Aston_rest_servlet_jdbc.mapper.CityMapper;
 import ru.balrom.Aston_rest_servlet_jdbc.repository.CityRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CityService implements Service<CityDTO>{
+public class CityService implements Service<CityDto>{
     private final CityRepository cityRepository;
     private final CityMapper mapper;
 
@@ -17,23 +17,23 @@ public class CityService implements Service<CityDTO>{
     }
 
     @Override
-    public CityDTO get(int id) {
-        return mapper.toDTO(cityRepository.get(id));
+    public CityDto get(int id) {
+        return mapper.toDto(cityRepository.get(id));
     }
 
     @Override
-    public List<CityDTO> getAll() {
-        return cityRepository.getAll().stream().map(mapper::toDTO).collect(Collectors.toList());
+    public List<CityDto> getAll() {
+        return cityRepository.getAll().stream().map(mapper::toDto).collect(Collectors.toList());
     }
 
     @Override
-    public void save(CityDTO cityDTO) {
-        cityRepository.save(mapper.fromDTO(cityDTO));
+    public void save(CityDto cityDTO) {
+        cityRepository.save(mapper.fromDto(cityDTO));
     }
 
     @Override
-    public void update(CityDTO cityDTO) {
-        cityRepository.update(mapper.fromDTO(cityDTO));
+    public void update(CityDto cityDTO) {
+        cityRepository.update(mapper.fromDto(cityDTO));
     }
 
     @Override

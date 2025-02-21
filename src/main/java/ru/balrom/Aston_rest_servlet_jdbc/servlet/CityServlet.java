@@ -1,7 +1,7 @@
 package ru.balrom.Aston_rest_servlet_jdbc.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ru.balrom.Aston_rest_servlet_jdbc.dto.CityDTO;
+import ru.balrom.Aston_rest_servlet_jdbc.dto.CityDto;
 import ru.balrom.Aston_rest_servlet_jdbc.service.CityService;
 import ru.balrom.Aston_rest_servlet_jdbc.service.Service;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "cityServlet", value = "/rest/v1/cities/*")
 public class CityServlet extends HttpServlet {
-    private final Service<CityDTO> serviceCity = new CityService();
+    private final Service<CityDto> serviceCity = new CityService();
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -27,14 +27,14 @@ public class CityServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         if (path == null || path.equals("/")) {
-            List<CityDTO> list = serviceCity.getAll();
+            List<CityDto> list = serviceCity.getAll();
             String json = mapper.writeValueAsString(list);
             response.setStatus(HttpServletResponse.SC_OK);
             writer.write(json);
 
         } else {
             int id = Integer.parseInt(path.substring(1));
-            CityDTO city = serviceCity.get(id);
+            CityDto city = serviceCity.get(id);
             try {
                 if (city == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -69,7 +69,7 @@ public class CityServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CityDTO current = mapper.readValue(stringBuilder.toString(), CityDTO.class);
+        CityDto current = mapper.readValue(stringBuilder.toString(), CityDto.class);
         serviceCity.save(current);
 
         response.setStatus(HttpServletResponse.SC_CREATED);
@@ -95,7 +95,7 @@ public class CityServlet extends HttpServlet {
         while (body.ready()) {
             stringBuilder.append(body.readLine());
         }
-        CityDTO current = mapper.readValue(stringBuilder.toString(), CityDTO.class);
+        CityDto current = mapper.readValue(stringBuilder.toString(), CityDto.class);
         serviceCity.update(current);
 
         response.setStatus(HttpServletResponse.SC_OK);
