@@ -38,7 +38,7 @@ public class ApartmentServlet extends HttpServlet {
             try {
                 if (apartment == null) {
                     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    response.getWriter().write("City with id - %s is not found");
+                    response.getWriter().write("Apartment with id - %s is not found");
                     return;
                 }
                 String json = mapper.writeValueAsString(apartment);
@@ -110,7 +110,7 @@ public class ApartmentServlet extends HttpServlet {
         response.setContentType("application/json");
 
         String path = request.getPathInfo();
-        if (path != null || !path.equals("/")) {
+        if (path != null && !path.equals("/")) {
             int id = Integer.parseInt(path.substring(1));
             serviceApartment.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);

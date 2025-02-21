@@ -110,7 +110,7 @@ public class CarServlet extends HttpServlet {
         response.setContentType("application/json");
 
         String path = request.getPathInfo();
-        if (path != null || !path.equals("/")) {
+        if (path != null && !path.equals("/")) {
             int id = Integer.parseInt(path.substring(1));
             serviceCar.delete(id);
             response.setStatus(HttpServletResponse.SC_OK);
